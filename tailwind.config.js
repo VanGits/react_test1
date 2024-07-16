@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#334155',
+        secondary: '#182C75'
+      },
       keyframes: {
         slowSpin: {
           '0%': { transform: 'rotate(0deg)' },

@@ -25,17 +25,13 @@
 
 // ----------------------------------------------------------------------------------//
 
-import { Box, Typography } from "@mui/material";
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React from "react";
-import { useState, useContext, createContext } from "react";
-import { Button } from "@mui/material";
+import React, { useState, useContext, createContext } from "react";
+import { Box, Typography, Button } from "@mui/material";
 
-//This is your context variable.
+// Create context
 const PersonContext = createContext();
 
-//This is your context provider component
+// Context provider component
 function Context({ children }) {
   const BaseContext = {
     name: "",
@@ -44,20 +40,37 @@ function Context({ children }) {
     complexion: "",
   };
 
-  const person = BaseContext;
+  const [person, setPerson] = useState(BaseContext);
 
-  return <PersonContext.Provider value={{}}>{children}</PersonContext.Provider>;
+  return (
+    <PersonContext.Provider value={{ person, setPerson }}>
+      {children}
+    </PersonContext.Provider>
+  );
 }
 
-//set values here.
+// Set values here component
 function SetterComponent() {
-  const setPerson = () => undefined;
+  const { person, setPerson } = useContext(PersonContext);
 
   const newPerson = {
     name: "Jrue Holiday",
     age: "34",
     height: "1.93m",
     complexion: "dark",
+  };
+
+  const handleSetPerson = () => {
+    if (person.name === newPerson.name) {
+      setPerson({
+        name: "",
+        age: "",
+        height: "",
+        complexion: "",
+      });
+    } else {
+      setPerson(newPerson);
+    }
   };
 
   return (
@@ -67,28 +80,32 @@ function SetterComponent() {
         width: 200,
         height: 45,
       }}
-      onClick={() => setPerson()}
+      onClick={handleSetPerson}
     >
       Set
     </Button>
   );
 }
 
-//access and display 'person' details here.
+// Access and display 'person' details here component
 function Screen() {
-  const person = "Jordan Ripley";
+  const { person } = useContext(PersonContext);
 
   return (
     <Box className="testContainer">
       <Box className="stateComp">
-        <Typography> {person ? person.name : "No name found."} </Typography>
+        <Typography> {person.name || "No name found."} </Typography>
         <SetterComponent />
       </Box>
     </Box>
   );
 }
 
-//default component.
+// Default component
 export default function Test4Screen() {
-  return <Screen />;
+  return (
+    <Context>
+      <Screen />
+    </Context>
+  );
 }

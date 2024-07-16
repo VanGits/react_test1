@@ -22,6 +22,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+
 export default function Test3Screen() {
   const people = {
     name: "Angelo Dato",
@@ -32,11 +33,13 @@ export default function Test3Screen() {
 
   return (
     <Box className="testCont">
-      <Typography> Details: </Typography>
+      <Typography>Details:</Typography>
       <List>
-        <ListItem>
-          <ListItemText> Name: {people.name} </ListItemText>
-        </ListItem>
+        {Object.entries(people).map(([key, value]) => (
+          <ListItem key={key}>
+            <ListItemText>{`${key}: ${value}`}</ListItemText>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );

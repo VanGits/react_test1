@@ -28,23 +28,27 @@
 
 // ----------------------------------------------------------------------------------//
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
 export default function Test2Screen() {
-  var color = "LEMONCHIFFON";
-  var color2 = "CORAL";
+  const [bgColor, setBgColor] = useState('lemonchiffon');
+
+  const toggleColor = () => {
+    setBgColor(prevColor => (prevColor === 'lemonchiffon' ? 'coral' : 'lemonchiffon'));
+  };
+
+  const textColor = bgColor === 'lemonchiffon' ? 'coral' : 'lemonchiffon';
 
   return (
-    <Box sx={{paddingY: 4}}>
+    <Box sx={{ paddingY: 4 }}>
       <Box className="stateComp">
         <Typography
-          sx={{ p: 3, backgroundColor: color, width: '90%', textAlign: 'center'}}
+          sx={{ p: 3, backgroundColor: bgColor, color: textColor, width: '90%', textAlign: 'center' }}
         >
-          Lemonchiffon
+          {bgColor.charAt(0).toUpperCase() + bgColor.slice(1)}
         </Typography>
-
-        <Button variant="contained" onClick={() => (color = "coral")} sx={{width: '50%'}}>
+        <Button variant="contained" onClick={toggleColor} sx={{ width: '50%' }}>
           Toggle
         </Button>
       </Box>

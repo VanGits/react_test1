@@ -26,28 +26,40 @@
 
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
 import Loader from "../../src/components/Loader";
-import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
-//default component.
+
+// Default component
 export default function Test5Screen() {
+  // Create stateful variable 'loading' and its setter
+  const [loading, setLoading] = useState(false);
+
+  // Function to simulate a request
   function mockRequest() {
-    setTimeout(() => {}, 1500);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }
+
   return (
     <Box className="testContainer">
       <Box className="stateComp">
-        <Button
-          variant="contained"
-          sx={{
-            width: 200,
-            height: 45,
-          }}
-          onClick={mockRequest}
-        >
-          Send Request
-        </Button>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Button
+            variant="contained"
+            sx={{
+              width: 200,
+              height: 45,
+            }}
+            onClick={mockRequest}
+          >
+            Send Request
+          </Button>
+        )}
       </Box>
     </Box>
   );
